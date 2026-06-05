@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sagt Lite 销售智能体</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <main class="phone">
+      <header class="appbar">
+        <div>
+          <p>图灵慧美</p>
+          <h1>Sagt 智能助手</h1>
+        </div>
+        <button id="refreshBtn">刷新</button>
+      </header>
+
+      <section class="customer-strip">
+        <label for="customerSelect">当前客户</label>
+        <select id="customerSelect"></select>
+      </section>
+
+      <section class="customer-card" id="customerCard">
+        <h2>客户信息加载中...</h2>
+      </section>
+
+      <section class="workspace">
+        <div id="status" class="status">请选择下方菜单执行智能体任务。</div>
+        <div id="resultBox" class="result-box">
+          <p>当前任务结果会显示在这里。</p>
+        </div>
+        <div id="reviewActions" class="review-actions hidden">
+          <button class="success" data-action="confirm">确认</button>
+          <button class="danger" data-action="abandon">放弃</button>
+          <button class="warn" data-action="regenerate">重新生成</button>
+        </div>
+      </section>
+
+      <section class="history">
+        <h3>客户长期记忆</h3>
+        <div id="memoryList"></div>
+      </section>
+
+      <nav class="tabbar">
+        <button data-task="profile">客户画像</button>
+        <button data-task="tags">客户标签</button>
+        <button data-task="chat_advice">聊天建议</button>
+        <button data-task="service_advice">客服建议</button>
+        <button data-task="schedule_advice">日程建议</button>
+      </nav>
+    </main>
+
+    <script src="/assets/app.js"></script>
+  </body>
+</html>

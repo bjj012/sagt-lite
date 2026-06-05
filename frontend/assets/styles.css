@@ -1,0 +1,251 @@
+:root {
+  --purple: #6f5bd4;
+  --purple-dark: #513ba9;
+  --blue: #2f80ed;
+  --ink: #28303d;
+  --muted: #7a8290;
+  --line: #e4e7ec;
+  --paper: #fffdf5;
+  --soft: #eef7ff;
+  --success: #47a64a;
+  --danger: #cc3f49;
+  --warn: #f5bd37;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  align-items: center;
+  background: #eef2f7;
+  color: var(--ink);
+  display: flex;
+  font-family: "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+  justify-content: center;
+  margin: 0;
+  min-height: 100vh;
+}
+
+button,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.phone {
+  background: #fff;
+  box-shadow: 0 18px 50px rgba(34, 39, 55, 0.18);
+  display: flex;
+  flex-direction: column;
+  height: 920px;
+  max-height: 100vh;
+  max-width: 430px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.appbar {
+  align-items: center;
+  background: linear-gradient(110deg, #6578e3, var(--purple-dark));
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 22px;
+}
+
+.appbar p,
+.appbar h1 {
+  margin: 0;
+}
+
+.appbar p {
+  font-size: 13px;
+  opacity: 0.86;
+}
+
+.appbar h1 {
+  font-size: 24px;
+}
+
+.appbar button {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  padding: 10px 14px;
+}
+
+.customer-strip {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 12px;
+  padding: 14px 18px;
+}
+
+.customer-strip label {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.customer-strip select {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  flex: 1;
+  padding: 9px;
+}
+
+.customer-card {
+  background: #fbfcff;
+  border-bottom: 1px solid var(--line);
+  padding: 16px 20px;
+}
+
+.customer-card h2 {
+  margin: 0 0 8px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.chip {
+  background: #f0ecff;
+  border-radius: 999px;
+  color: var(--purple-dark);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 5px 9px;
+}
+
+.workspace {
+  background: var(--paper);
+  border-bottom: 1px solid #f0d57b;
+  padding: 18px 20px;
+}
+
+.status {
+  background: #fff3c4;
+  border-radius: 8px;
+  color: #855d00;
+  font-weight: 800;
+  margin-bottom: 14px;
+  padding: 13px;
+  text-align: center;
+}
+
+.result-box {
+  background: #fff;
+  border: 1px solid #f0d57b;
+  border-radius: 8px;
+  min-height: 150px;
+  padding: 14px;
+}
+
+.result-box pre {
+  font-family: inherit;
+  line-height: 1.7;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.review-actions {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 14px;
+}
+
+.review-actions button {
+  color: #fff;
+  padding: 12px 8px;
+}
+
+.success {
+  background: var(--success);
+}
+
+.danger {
+  background: var(--danger);
+}
+
+.warn {
+  background: var(--warn);
+  color: #3d2b00 !important;
+}
+
+.hidden {
+  display: none;
+}
+
+.history {
+  flex: 1;
+  overflow: auto;
+  padding: 18px 20px 92px;
+}
+
+.history h3 {
+  color: var(--purple-dark);
+  margin: 0 0 12px;
+}
+
+.memory-item {
+  background: var(--soft);
+  border-left: 4px solid var(--blue);
+  border-radius: 8px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding: 12px;
+}
+
+.memory-item small {
+  color: var(--muted);
+  display: block;
+  margin-top: 6px;
+}
+
+.tabbar {
+  background: #fff;
+  border-top: 1px solid var(--line);
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.tabbar button {
+  background: #fff;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--ink);
+  font-size: 12px;
+  height: 68px;
+  padding: 8px 4px;
+}
+
+.tabbar button:hover {
+  background: #f7f4ff;
+  color: var(--purple-dark);
+}
+
+@media (max-width: 480px) {
+  body {
+    align-items: stretch;
+  }
+
+  .phone {
+    height: 100vh;
+    max-width: none;
+  }
+}
