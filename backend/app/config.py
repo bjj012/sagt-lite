@@ -6,7 +6,7 @@ DATA_DIR = PROJECT_ROOT / "data"
 DB_PATH = DATA_DIR / "sagt.sqlite3"
 FRONTEND_DIR = PROJECT_ROOT / "frontend"
 
-APP_NAME = "Sagt Lite"
+APP_NAME = "Sagt 销售智能体工作台"
 
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
