@@ -22,6 +22,19 @@ def main() -> None:
         customer = customers.json()["customers"][0]
         customer_id = customer["id"]
 
+        created = client.post(
+            "/api/customers",
+            json={"name": "赵经理", "phone": "13900000000", "level": "A", "notes": "企业客户，关注交付稳定性。"},
+        )
+        assert created.status_code == 200, created.text
+        created_id = created.json()["customer"]["id"]
+
+        interaction = client.post(
+            f"/api/customers/{created_id}/interactions",
+            json={"channel": "wechat", "content": "客户要求下周三前给出年会伴手礼方案，并确认发票信息。"},
+        )
+        assert interaction.status_code == 200, interaction.text
+
         profile_task = client.post(
             f"/api/customers/{customer_id}/tasks",
             json={"task_type": "profile"},
@@ -48,6 +61,10 @@ def main() -> None:
         detail = client.get(f"/api/customers/{customer_id}")
         assert detail.status_code == 200, detail.text
         assert detail.json()["customer"]["profile"]["姓名"] == customer["name"]
+
+        exported = client.get(f"/api/customers/{customer_id}/export")
+        assert exported.status_code == 200, exported.text
+        assert exported.json()["customer"]["id"] == customer_id
 
         print("Sagt Lite smoke test passed.")
         print(f"customer_id={customer_id}, profile_task={task['id']}, tag_task={tag_id}")
