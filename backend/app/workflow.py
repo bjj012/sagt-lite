@@ -22,7 +22,7 @@ TASK_LABELS = {
 
 
 class SalesAgentWorkflow:
-    """A small LangGraph-style state machine for a sales assistant demo."""
+    """State-machine workflow for sales-assistant tasks."""
 
     def run(self, ctx: CustomerContext, task_type: str, variant: int = 0) -> dict:
         if task_type not in TASK_LABELS:
