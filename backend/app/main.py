@@ -20,6 +20,19 @@ class TaskActionRequest(BaseModel):
     action: str
 
 
+class CustomerCreateRequest(BaseModel):
+    name: str
+    phone: str
+    level: str = "B"
+    notes: str = ""
+
+
+class InteractionCreateRequest(BaseModel):
+    channel: str = "wechat"
+    content: str
+    metadata: dict = {}
+
+
 app = FastAPI(title=APP_NAME, version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
@@ -48,9 +61,57 @@ def list_customers() -> dict:
     return {"customers": [row_to_dict(row) for row in rows]}
 
 
+@app.post("/api/customers")
+def create_customer(request: CustomerCreateRequest) -> dict:
+    if not request.name.strip() or not request.phone.strip():
+        raise HTTPException(status_code=400, detail="Customer name and phone are required.")
+    created = now_iso()
+    with connect() as conn:
+        cursor = conn.execute(
+            """
+            INSERT INTO customers (name, phone, level, notes, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (
+                request.name.strip(),
+                request.phone.strip(),
+                request.level.strip().upper() or "B",
+                request.notes.strip(),
+                created,
+                created,
+            ),
+        )
+    return {"customer": load_customer(cursor.lastrowid)}
+
+
 @app.get("/api/customers/{customer_id}")
 def customer_detail(customer_id: int) -> dict:
     return {"customer": load_customer(customer_id), "tasks": load_tasks(customer_id)}
+
+
+@app.post("/api/customers/{customer_id}/interactions")
+def create_interaction(customer_id: int, request: InteractionCreateRequest) -> dict:
+    load_customer(customer_id)
+    if not request.content.strip():
+        raise HTTPException(status_code=400, detail="Interaction content cannot be empty.")
+    created = now_iso()
+    with connect() as conn:
+        cursor = conn.execute(
+            """
+            INSERT INTO interactions (customer_id, channel, content, metadata, created_at)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                customer_id,
+                request.channel.strip() or "manual",
+                request.content.strip(),
+                json.dumps(request.metadata, ensure_ascii=False),
+                created,
+            ),
+        )
+    with connect() as conn:
+        row = conn.execute("SELECT * FROM interactions WHERE id = ?", (cursor.lastrowid,)).fetchone()
+    return {"interaction": row_to_dict(row)}
 
 
 @app.post("/api/customers/{customer_id}/tasks")
@@ -125,6 +186,18 @@ def list_tasks() -> dict:
             """
         ).fetchall()
     return {"tasks": [row_to_dict(row) for row in rows]}
+
+
+@app.get("/api/customers/{customer_id}/export")
+def export_customer(customer_id: int) -> dict:
+    customer = load_customer(customer_id)
+    tasks = load_tasks(customer_id)
+    return {
+        "customer": customer,
+        "tasks": tasks,
+        "exported_at": now_iso(),
+        "usage": "可用于 CRM 客户档案迁移、销售主管复盘或智能体记忆审计。",
+    }
 
 
 def load_customer(customer_id: int) -> dict:
