@@ -66,7 +66,7 @@ def main() -> None:
         assert exported.status_code == 200, exported.text
         assert exported.json()["customer"]["id"] == customer_id
 
-        print("Sagt Lite smoke test passed.")
+        print("Sagt 销售智能体健康检查通过。")
         print(f"customer_id={customer_id}, profile_task={task['id']}, tag_task={tag_id}")
 
 

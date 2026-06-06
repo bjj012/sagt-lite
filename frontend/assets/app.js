@@ -75,7 +75,7 @@ function renderMemory(customer) {
 
 async function runTask(taskType) {
   $("#status").textContent = `正在执行：${taskLabels[taskType]}`;
-  $("#resultBox").innerHTML = "<p>Agent 正在读取客户记忆、调用工具并生成建议...</p>";
+  $("#resultBox").innerHTML = "<p>智能体正在读取客户记忆、调用工具并生成建议...</p>";
   $("#reviewActions").classList.add("hidden");
   const data = await api(`/api/customers/${state.currentCustomerId}/tasks`, {
     method: "POST",
